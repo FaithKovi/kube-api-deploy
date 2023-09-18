@@ -9,6 +9,8 @@ def deploy_app():
     # Loads kubernetes config from default location
     config.load_kube_config(config_file=kubeconfig_path)
 
+    
+
     # Ask the user for input
     deployment_name = input("Enter a name for the deployment: ")
     replica_count = input("Enter the number of replicas: ")
