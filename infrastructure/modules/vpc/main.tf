@@ -1,12 +1,8 @@
-provider "aws" {
-  region = var.aws_region 
-}
-
 data "aws_availability_zones" "azs" {
   state = "available"
 }
 
-module "network-vpc" {
+module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
   version = "~> 2.0"
 
