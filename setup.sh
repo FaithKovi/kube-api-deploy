@@ -47,6 +47,11 @@ terraform validate
 # Deploy the Terraform configuration
 terraform apply -var-file=terraform.tfvars -auto-approve
 
+# Retrieve kubeconfig
+terraform output kubeconfig > kubeconfig.yaml
+
+# Set KUBECONFIG Environment Variable
+export KUBECONFIG=kubeconfig.yaml
 
 # Exit the infrastructure folder
 cd ..
