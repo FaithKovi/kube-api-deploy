@@ -5,15 +5,20 @@ variable "security_group_name" {
 
 variable "from_port" {
     description = "value of from port"
-    type = string
+    type = number
 }
 
 variable "to_port" {
     description = "value of to port"
-    type = string
+    type = number
 }
 
 variable "rule" {
   description = "value of rule"
+  type = string
+}
+
+variable "ports" {
+  description = "value of port"
   type = string
 }

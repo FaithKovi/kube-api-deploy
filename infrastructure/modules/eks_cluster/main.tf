@@ -13,19 +13,19 @@ module "eks" {
   cluster_name = var.cluster_name
   cluster_version = var.cluster_version
 
-  subnets = module.vpc.private_subnets
-  vpc_id = module.vpc.vpc_id
+  # subnets = module.vpc.private_subnets
+  # vpc_id = module.vpc.vpc_id
 
-  worker_groups = {
-    worker_group_1 = {
-      instance_type = var.instance_type
-      asg_max_size  = 1
-    }
-    worker_group_2 = {
-      instance_type = var.instance_type
-      asg_max_size  = 1
-    }
-  }
+  # worker_groups = {
+  #   worker_group_1 = {
+  #     instance_type = var.instance_type
+  #     asg_max_size  = 1
+  #   }
+  #   worker_group_2 = {
+  #     instance_type = var.instance_type
+  #     asg_max_size  = 1
+  #   }
+  # }
 
   tags = {
     environment = "var.environment"

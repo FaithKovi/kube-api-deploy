@@ -3,7 +3,7 @@ module "cluster_sg" {
 
   name        = var.security_group_name
   description = "Security group for user-service with custom ports open within VPC, and PostgreSQL publicly open"
-  vpc_id      = module.vpc.vpc_id
+  # vpc_id      = module.vpc.vpc_id
 
   ingress_cidr_blocks      = ["10.10.0.0/16"]
   ingress_rules            = ["https-443-tcp"]
@@ -18,7 +18,7 @@ module "cluster_sg" {
     {
       rule        = var.rule
       cidr_blocks = "0.0.0.0/0"
-      ports       = [var.ports]
+      ports       = "var.ports"
       
     },
   ]

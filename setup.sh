@@ -42,7 +42,7 @@ terraform init
 # terraform plan
 
 # Validate the Terraform configuration
-terraform validate
+terraform validate -var-file=terraform.tfvars
 
 # Deploy the Terraform configuration
 terraform apply -var-file=terraform.tfvars -auto-approve

@@ -37,3 +37,50 @@ variable "environment" {
   description = "value of environment name"
   type = string
 }
+
+variable "azs" {
+  description = "value of availability zones"
+  type = list(string)
+}
+
+variable "from_port" {
+    description = "value of from port"
+    type = number
+}
+
+variable "to_port" {
+    description = "value of to port"
+    type = number
+}
+
+variable "rule" {
+  description = "value of the rule"
+  type = string
+}
+
+variable "ports" {
+  description = "value of ports"
+  type = string
+}
+
+variable "security_group_name" {
+  description = "value of the security group name"
+  type = string
+}
+
+variable "application_name" {
+  description = "value of the application name"
+  type = string
+}
+
+variable "cluster_version" {
+  description = "value of the cluster version"
+  type = string
+}
+
+variable "region" {
+  description = "value of the region"
+  type = string
+}
+
+
