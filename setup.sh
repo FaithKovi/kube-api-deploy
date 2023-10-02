@@ -50,6 +50,8 @@ terraform apply -var-file=terraform.tfvars -auto-approve
 # Retrieve kubeconfig
 terraform output kubeconfig > kubeconfig.yaml
 
+cp ~/.kube/config ./kubeconfig
+
 # Set KUBECONFIG Environment Variable
 export KUBECONFIG=kubeconfig.yaml
 

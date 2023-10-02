@@ -14,18 +14,19 @@ provider "kubernetes" {
 }
 
 
-
 module "vpc" {
   source                    = "./modules/vpc"
   vpc_name                  = var.vpc_name
   vpc_cidr_block            = var.vpc_cidr_block
   private_subnet_cidr_block = var.private_subnet_cidr_block
   public_subnet_cidr_block  = var.public_subnet_cidr_block
-  availability_zones        = var.azs
+  availability_zones        = var.availability_zones
+  environment               = var.environment
+  application_name          = var.application_name
   cluster_name              = var.cluster_name
 }
 
-module "cluster_sg" {
+module "eks_security_group" {
   source = "./modules/security_group" # Reference the security group configuration in securitygroup.tf
   # vpc_id = module.cluster_vpc.vpc_id
   from_port           = var.from_port
@@ -33,10 +34,11 @@ module "cluster_sg" {
   rule                = var.rule
   ports               = var.ports
   security_group_name = var.security_group_name
+  security_id         = module.eks_security_group.security_id
 }
 
 module "eks" {
-  source           = "./modules/eks_cluster" # Reference the EKS configuration in eks.tf
+  source           = "./modules/eks" # Reference the EKS configuration in eks.tf
   cluster_name     = var.cluster_name
   instance_type    = var.instance_type
   environment      = var.environment
