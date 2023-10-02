@@ -13,6 +13,12 @@ variable "instance_type" {
   type        = string
 }
 
+variable "worker_groups" {
+  description = "A list of maps defining worker group configurations to be defined using AWS Launch Configurations. See workers_group_defaults for valid keys."
+  type        = any
+  default     = []
+}
+
 variable "asg_desired_capacity" {
   description = "value of asg desired capacity"
   type        = string
@@ -37,4 +43,16 @@ variable "environment" {
 variable "application_name" {
   description = "value of application name"
   type        = string
+}
+
+variable "from_port" {
+  description = "value of from port"
+  type        = number
+  default     = 22
+}
+
+variable "to_port" {
+  description = "value of to port"
+  type        = number
+  default     = 22
 }
