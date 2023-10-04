@@ -1,15 +1,16 @@
 # This is where you input the variables you want to use in the script
-vpc_name                  = eks-cluster-vpc
-vpc_cidr_block            = "10.0.0.0/16"
-public_subnet_cidr_block  = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-private_subnet_cidr_block = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
-availability_zones        = ["us-east-1a", "us-east-1b", "us-east-1c"]
-aws_region                = "us-east-1"
-cluster_name              = "eks-cluster"
-application_name          = "eks-app"
-security_group_name       = "eks-cluster-sg"
-from_port                 = 22
-to_port                   = 80
-protocol                  = "tcp"
-ingress_cidr_blocks       = ["0.0.0.0/0"]
-         
+region                         = "us-east1"
+cluster_name                   = "eks-cluster"
+cluster_endpoint_public_access = true
+ami_type                       = "AL2_x86_64"
+instance_types                 = ["m5.large", "m5n.large", "m5zn.large"]
+min_size                       = 1
+max_size                       = 2
+desired_size                   = 1
+from_port                      = 80
+to_port                        = 80
+protocol                       = "tcp"
+vpc_name                       = "eks-cluster-vpc"
+vpc_cidr                       = "10.10.0.0/16"
+availability_zones             = ["us-east1a", "us-east1b", "us-east1c"]
+cidr_blocks                    = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]         

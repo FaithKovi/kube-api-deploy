@@ -1,46 +1,41 @@
-variable "vpc_name" {
-  description = "value of the VPC name"
-  type        = string
-}
-
-variable "vpc_cidr_block" {
-  description = "value of the VPC CIDR block"
-  type        = string
-}
-
-variable "private_subnet_cidr_block" {
-  description = "List of private subnet CIDR blocks"
-  type        = list(string)
-}
-
-variable "public_subnet_cidr_block" {
-  description = "List of public subnet CIDR blocks"
-  type        = list(string)
-}
-
-variable "aws_region" {
-  description = "value of the region"
+variable "region" {
+  description = "value of region"
   type        = string
 }
 
 variable "cluster_name" {
-  description = "value of the EKS cluster name"
+  description = "value of cluster name"
   type        = string
 }
 
-variable "instance_type" {
-  description = "value of the instance type"
+variable "cluster_endpoint_public_access" {
+  description = "value of cluster endpoint public access"
+  type        = bool
+}
+
+variable "ami_type" {
+  description = "value of ami type"
   type        = string
 }
 
-variable "environment" {
-  description = "value of environment name"
-  type        = string
-}
-
-variable "azs" {
-  description = "value of availability zones"
+variable "instance_types" {
+  description = "value of instance types"
   type        = list(string)
+}
+
+variable "min_size" {
+  description = "value of worker group min size"
+  type        = number
+}
+
+variable "max_size" {
+  description = "value of worker group max size"
+  type        = number
+}
+
+variable "desired_size" {
+  description = "value of desired size"
+  type        = number
 }
 
 variable "from_port" {
@@ -53,34 +48,29 @@ variable "to_port" {
   type        = number
 }
 
-variable "rule" {
-  description = "value of the rule"
+variable "protocol" {
+  description = "value of protocol"
   type        = string
 }
 
-variable "ports" {
-  description = "value of ports"
+variable "vpc_name" {
+  description = "value of vpc name"
   type        = string
 }
 
-variable "security_group_name" {
-  description = "value of the security group name"
+variable "vpc_cidr" {
+  description = "value of vpc cidr"
   type        = string
 }
 
-variable "application_name" {
-  description = "value of the application name"
-  type        = string
+variable "availability_zones" {
+  description = "value of availability zones"
+  type        = list(string)
 }
 
-variable "cluster_version" {
-  description = "value of the cluster version"
-  type        = string
-}
-
-variable "region" {
-  description = "value of the region"
-  type        = string
+variable "cidr_blocks" {
+  description = "value of cidr blocks"
+  type        = list(string)
 }
 
 

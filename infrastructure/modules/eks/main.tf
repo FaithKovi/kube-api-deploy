@@ -1,51 +1,44 @@
-data "aws_eks_cluster" "cluster" {
-  name = module.eks.cluster_id
-}
-
-data "aws_eks_cluster_auth" "cluster" {
-  name = module.eks.cluster_id
-}
-
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "19.15.4"
 
-  cluster_name    = var.cluster_name
-  cluster_version = var.cluster_version
-
-  subnet_ids = module.vpc.subnet_ids
-  vpc_id     = module.vpc.vpc_id
-
-  worker_groups = {
-    eks_nodes = {
-      instance_type        = var.instance_type
-      asg_desired_capacity = var.asg_desired_capacity
-      asg_max_size         = var.asg_max_size
-      asg_min_size         = var.asg_min_size
-    }
-  }
-
-  # Security group module reference
-  eks_security_group_id = module.eks_security_group.security_group_id
-
-  # Security group module reference
-  eks_security_group_name        = "eks-cluster-sg"
-  eks_security_group_description = "Security group for EKS cluster"
-  eks_security_group_ingress_rules = [
-    {
-      from_port   = 443 # Example: Allow HTTPS traffic
-      to_port     = 443
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"] # Customize as needed
-    }
-  ]
+  cluster_name                   = var.cluster_name
+  cluster_endpoint_public_access = var.cluster_endpoint_public_access
 }
 
+# vpc_id                   = module.vpc.vpc_id
+# subnet_ids               = module.vpc.private_subnets
+# control_plane_subnet_ids = module.vpc.intra_subnets
+
+# # Extend cluster security group rules
+# cluster_security_group_additional_rules = {
+#   ingress_nodes_ephemeral_ports_tcp = {
+#     description                = "Nodes on ephemeral ports"
+#     protocol                   = var.protocol
+#     from_port                  = var.from_port
+#     to_port                    = var.to_port
+#     type                       = "ingress"
+#     source_node_security_group = true
+#   }
 
 
-resource "aws_iam_role_policy_attachment" "eks-cluster-policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = module.eks.workers_iam_role_name
-}
+# # Extend node-to-node security group rules
+# node_security_group_additional_rules = {
+#   ingress_self_all = {
+#     description = "Node to node all ports/protocols"
+#     protocol    = "-1"
+#     from_port   = 0
+#     to_port     = 0
+#     type        = "ingress"
+#     self        = true
+#   }
+# }
 
-
+# eks_managed_node_groups = {
+#   cluster_wg = {
+#     min_size     = var.min_size
+#     max_size     = var.max_size
+#     desired_size = var.desired_size
+#     instance_types = var.instance_types
+#   }
+# }
