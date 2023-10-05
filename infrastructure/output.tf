@@ -1,5 +1,5 @@
 output "kubeconfig" {
-  value = module.eks.kubeconfig
+  value = "kubeconfig.yaml"
 }
 
 output "cluster_certificate_authority_data" {

@@ -28,6 +28,12 @@ module "eks" {
   cluster_endpoint_public_access = var.cluster_endpoint_public_access
 }
 
-# data "aws_eks_cluster_auth" "cluster" {
-#   name = aws_eks_cluster.cluster.name
-# }
+resource "null_resource" "generate_kubeconfig" {
+  provisioner "local-exec" {
+    command = "aws eks update-kubeconfig --name $(var.cluster_name) --region $(var.region) --kubeconfig kubeconfig.yaml"
+  }
+
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+}
