@@ -8,7 +8,7 @@ variable "vpc_cidr" {
   type        = string
 }
 
-variable "availability_zones" {
+variable "azs" {
   description = "value of availability zones"
   type        = list(string)
 }
@@ -16,11 +16,6 @@ variable "availability_zones" {
 variable "cluster_name" {
   description = "value of cluster name"
   type        = string
-}
-
-variable "cidr_blocks" {
-  description = "value of cidr blocks"
-  type        = list(string)
 }
 
 variable "from_port" {

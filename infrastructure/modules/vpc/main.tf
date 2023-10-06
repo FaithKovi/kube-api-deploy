@@ -5,10 +5,9 @@ module "vpc" {
   name = var.vpc_name
   cidr = var.vpc_cidr
 
-  azs             = var.availability_zones
-  private_subnets = [for k, v in var.availability_zones : cidrsubnet(var.cidr_blocks, 4, k)]
-  public_subnets  = [for k, v in var.availability_zones : cidrsubnet(var.cidr_blocks, 8, k + 48)]
-  intra_subnets   = [for k, v in var.availability_zones : cidrsubnet(var.cidr_blocks, 8, k + 52)]
+  azs             = var.azs
+  private_subnets = [for k, v in var.azs : cidrsubnet(var.vpc_cidr, 8, k)]
+  public_subnets  = [for k, v in var.azs : cidrsubnet(var.vpc_cidr, 8, k + 4)]
 
   enable_nat_gateway   = true
   single_nat_gateway   = true
@@ -31,54 +30,27 @@ module "vpc" {
 
 resource "aws_security_group" "cluster" {
   name_prefix = "${var.cluster_name}-sg"
+  description = "Allow app traffic"
   vpc_id      = module.vpc.vpc_id
+
 
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = var.cidr_blocks
+    cidr_blocks = [module.vpc.vpc_cidr_block]
+  }
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = [module.vpc.vpc_cidr_block]
   }
 
   ingress {
     from_port   = var.from_port
     to_port     = var.to_port
     protocol    = var.protocol
-    cidr_blocks = var.cidr_blocks
+    cidr_blocks = [module.vpc.vpc_cidr_block]
   }
 }
-
-resource "aws_iam_policy" "cluster" {
-  name = "${var.cluster_name}-cluster"
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = [
-          "ec2:Describe*",
-        ]
-        Effect   = "Allow"
-        Resource = "*"
-      },
-    ]
-  })
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

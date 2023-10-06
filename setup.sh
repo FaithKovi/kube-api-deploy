@@ -38,11 +38,11 @@ cd infrastructure
 # Initialize the Terraform configuration
 terraform init
 
-# Terraform plan
-# terraform plan
-
 # Validate the Terraform configuration
-terraform validate -var-file=terraform.tfvars
+terraform validate 
+
+# Terraform plan
+terraform plan -var-file=terraform.tfvars
 
 # Deploy the Terraform configuration
 terraform apply -var-file=terraform.tfvars -auto-approve
