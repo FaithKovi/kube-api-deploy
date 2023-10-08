@@ -4,4 +4,5 @@ module "eks" {
 
   cluster_name                   = var.cluster_name
   cluster_endpoint_public_access = var.cluster_endpoint_public_access
+  subnet_ids                     = var.subnet_ids
 }

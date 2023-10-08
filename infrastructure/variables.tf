@@ -68,9 +68,6 @@ variable "azs" {
   type        = list(string)
 }
 
-variable "cidr_blocks" {
-  description = "value of cidr blocks"
-  type        = list(string)
-}
+
 
 

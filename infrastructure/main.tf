@@ -8,10 +8,9 @@ module "vpc" {
   vpc_cidr     = var.vpc_cidr
   azs          = var.azs
   cluster_name = var.cluster_name
-  # cidr_blocks        = var.cidr_blocks
-  from_port = var.from_port
-  to_port   = var.to_port
-  protocol  = var.protocol
+  from_port    = var.from_port
+  to_port      = var.to_port
+  protocol     = var.protocol
 }
 
 module "eks" {
@@ -26,7 +25,12 @@ module "eks" {
   protocol                       = var.protocol
   instance_types                 = var.instance_types
   cluster_endpoint_public_access = var.cluster_endpoint_public_access
+  subnet_ids                     = module.vpc.private_subnets
+  depends_on = [
+    module.vpc
+  ]
 }
+
 
 resource "aws_iam_policy" "cluster" {
   name = "${var.cluster_name}-cluster"
