@@ -3,7 +3,8 @@ from kubernetes import client, config
 
 def deploy_app():
     kubeconfig_filename = "kubeconfig.yaml"
-    kubeconfig_path = os.path.expanduser(f"~/{kubeconfig_filename}")
+    kubeconfig_path = os.path.expanduser(f"~\infrastructure\{kubeconfig_filename}")
+    print(f"Using kubeconfig file: {kubeconfig_path}")
     os.environ["KUBECONFIG"] = kubeconfig_path
 
     # Loads kubernetes config from default location

@@ -9,3 +9,6 @@ terraform.tfstate.d/
 terraform.log
 .terraform.lock.hcl
 *.tfvars
+terraform.plan
+
+kubeconfig.yaml

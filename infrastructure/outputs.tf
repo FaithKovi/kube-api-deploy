@@ -21,3 +21,8 @@ output "cluster_status" {
   description = "Status of the EKS cluster. One of `CREATING`, `ACTIVE`, `DELETING`, `FAILED`"
   value       = module.eks.cluster_status
 }
+
+# output "cluster_security_group_id" {
+#   description = "Cluster security group that was created by Amazon EKS for the cluster. Managed node groups use this security group for control-plane-to-data-plane communication. Referred to as 'Cluster security group' in the EKS console"
+#   value       = module.eks.cluster_security_group_id
+# }

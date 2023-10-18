@@ -44,6 +44,9 @@ terraform validate
 # Terraform plan
 terraform plan -var-file=terraform.tfvars
 
+terraform plan -var-file=terraform.tfvars -out=terraform.plan
+terraform apply terraform.plan
+
 # Deploy the Terraform configuration
 terraform apply -var-file=terraform.tfvars -auto-approve
 
@@ -54,6 +57,7 @@ cp ~/.kube/config ./kubeconfig
 
 # Set KUBECONFIG Environment Variable
 export KUBECONFIG=kubeconfig.yaml
+
 
 # Exit the infrastructure folder
 cd ..

@@ -17,6 +17,7 @@ module "eks" {
   source                         = "./modules/eks"
   cluster_name                   = var.cluster_name
   ami_type                       = var.ami_type
+  vpc_id                         = module.vpc.vpc_id
   max_size                       = var.max_size
   min_size                       = var.min_size
   desired_size                   = var.desired_size
@@ -29,6 +30,9 @@ module "eks" {
   depends_on = [
     module.vpc
   ]
+  cluster_security_group_id = module.vpc.cluster_security_group_id
+
+
 }
 
 
@@ -50,8 +54,11 @@ resource "aws_iam_policy" "cluster" {
 }
 
 resource "null_resource" "generate_kubeconfig" {
+  depends_on = [
+    module.eks
+  ]
   provisioner "local-exec" {
-    command = "aws eks update-kubeconfig --name $(var.cluster_name) --region $(var.region) --kubeconfig kubeconfig.yaml"
+    command = "aws eks update-kubeconfig --name ${var.cluster_name} --region ${var.region} --kubeconfig kubeconfig.yaml"
   }
 
   triggers = {
