@@ -3,7 +3,7 @@ from kubernetes import client, config
 
 def deploy_app():
     kubeconfig_filename = "kubeconfig.yaml"
-    kubeconfig_path = os.path.expanduser(f"~\infrastructure\{kubeconfig_filename}")
+    kubeconfig_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "infrastructure", kubeconfig_filename))
     print(f"Using kubeconfig file: {kubeconfig_path}")
     os.environ["KUBECONFIG"] = kubeconfig_path
 
@@ -14,17 +14,20 @@ def deploy_app():
 
     # Ask the user for input
     deployment_name = input("Enter a name for the deployment: ")
-    replica_count = input("Enter the number of replicas: ")
-    container_image = input("Enter the Docker image name: ")
-    container_port = input("Enter the container port: ")
+    replica_count = int(input("Enter the number of replicas: "))
+    image_name = input("Enter the Docker image name: ")
+    container_port = int(input("Enter the container port: "))
     namespace_name = input("Enter the namespace: ")
 
     
     # Create a kubernetes client
     api_client = client.ApiClient()
+    print("Created kubernetes client")
 
     # Create a kubernetes api instance
     api_instance = client.AppsV1Api(api_client)
+
+    print("Created kubernetes api instance")
 
     # Create a kubernetes deployment object
     deployment = client.V1Deployment(
@@ -42,8 +45,12 @@ def deploy_app():
                     containers=[
                         client.V1Container(
                             name=deployment_name,
-                            image=container_image,
-                            ports=[client.V1ContainerPort(container_port=container_port)]
+                            image=image_name,
+                            ports=[client.V1ContainerPort(container_port=container_port)],
+                            resources=client.V1ResourceRequirements(
+                                requests={"cpu": "0.1", "memory": "256Mi"},
+                                limits={"cpu": "0.5", "memory": "512Mi"}
+                            )
                         )
                     ]
                 )
