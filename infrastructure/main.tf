@@ -27,9 +27,9 @@ module "eks" {
   instance_types                 = var.instance_types
   cluster_endpoint_public_access = var.cluster_endpoint_public_access
   subnet_ids                     = module.vpc.private_subnets
-  depends_on = [
-    module.vpc
-  ]
+  # depends_on = [
+  #   module.vpc
+  # ]
   cluster_security_group_id = module.vpc.cluster_security_group_id
 
 

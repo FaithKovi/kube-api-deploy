@@ -32,5 +32,62 @@ module "eks" {
   }
 
 
+  # EKS Managed Node Group(s)
+  eks_managed_node_group_defaults = {
+    ami_type       = var.ami_type
+    instance_types = var.instance_types
+
+    attach_cluster_primary_security_group = true
+    vpc_security_group_ids                = [var.cluster_security_group_id]
+  }
+
+  eks_managed_node_groups = {
+    blue = {}
+    green = {
+      min_size     = var.min_size
+      max_size     = var.max_size
+      desired_size = 1
+
+      instance_types = var.instance_types
+      capacity_type  = "SPOT"
+      labels = {
+        Environment = "test"
+        GithubRepo  = "terraform-aws-eks"
+        GithubOrg   = "terraform-aws-modules"
+      }
+
+      taints = {
+        dedicated = {
+          key    = "dedicated"
+          value  = "gpuGroup"
+          effect = "NO_SCHEDULE"
+        }
+      }
+
+      block_device_mappings = {
+        xvda = {
+          device_name = "/dev/xvda"
+          ebs = {
+            volume_size           = 100
+            volume_type           = "gp3"
+            iops                  = 3000
+            throughput            = 150
+            delete_on_termination = true
+          }
+        }
+      }
+
+      update_config = {
+        max_unavailable_percentage = 33 # or set `max_unavailable`
+      }
+
+      tags = {
+        ExtraTag = "cluster"
+      }
+    }
+  }
+
+
+
 
 }
